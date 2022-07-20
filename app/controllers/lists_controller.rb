@@ -10,6 +10,7 @@ class ListsController < ApplicationController
 
   def show
     @list = List.find(params[:id])
+    @bookmarks = @list.bookmarks
   end
 
   def create
@@ -18,8 +19,14 @@ class ListsController < ApplicationController
     if @list.save
       redirect_to @list
     else
-      render 'new'
+      render :new
     end
+  end
+
+  def destroy
+    @list = List.find(params[:id])
+    @list.destroy
+    redirect_to @list
   end
 
   private
